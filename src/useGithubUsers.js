@@ -54,7 +54,7 @@ export default function useGithubUsers(query, pageNumber) {
     setLoading(true);
     setError(false);
 
-    if (query) searchRef.current(query, pageNumber);
+    if (query && pageNumber) searchRef.current(query, pageNumber);
     else {
       setLoading(false);
     }

@@ -26,22 +26,40 @@ function App() {
     setQuery(e.target.value);
     setPageNumber(1);
   }
+
+  function handleSelection(user) {
+    setQuery(user);
+    setPageNumber(0);
+    console.log("do whatever you want");
+  }
+
   return (
     <>
       <input type="text" value={query} onChange={handleSearch}></input>
-      {users.map((book, index) => {
-        if (users.length === index + 1) {
-          return (
-            <div ref={lastElementRef} key={book}>
-              {book}
-            </div>
-          );
-        } else {
-          return <div key={book}>{book}</div>;
-        }
-      })}
+      {users.map((user, index) => (
+        <div
+          key={user}
+          onClick={() => handleSelection(user)}
+          style={{ cursor: "pointer" }}
+          onMouseEnter={(e) => {
+            e.target.style.background = "grey";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = "white";
+          }}
+        >
+          {users.length === index + 1 ? (
+            <div ref={lastElementRef}>{user}</div>
+          ) : (
+            <div>{user}</div>
+          )}
+        </div>
+      ))}
       <div>{loading && "Loading..."}</div>
       <div>{error && "Error"}</div>
+      <div>
+        {!loading && !error && !users.length && pageNumber ? "No results" : ""}
+      </div>
     </>
   );
 }
